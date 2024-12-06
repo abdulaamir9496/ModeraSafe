@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import authService from 'path/to/authService';  // Import authService
 
 const SignInForm = () => {
   const [email, setEmail] = useState('');
@@ -18,6 +19,7 @@ const SignInForm = () => {
       }
     } catch (error) {
       setError('An error occurred');
+      console.log(error);
     }
   };
 
@@ -30,3 +32,5 @@ const SignInForm = () => {
     </form>
   );
 };
+
+export default SignInForm
