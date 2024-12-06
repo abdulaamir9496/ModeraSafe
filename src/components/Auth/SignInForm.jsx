@@ -1,36 +1,49 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import authService from 'path/to/authService';  // Import authService
+import { useAuth } from '../contexts/AuthContext';
 
 const SignInForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const history = useHistory();
+    const { signIn } = useAuth();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await authService.login({ email, password });
-      if (response.success) {
-        history.push('/moderation');  // Redirect to moderation page
-      } else {
-        setError(response.message || 'Invalid credentials');
-      }
-    } catch (error) {
-      setError('An error occurred');
-      console.log(error);
-    }
-  };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Simulate login logic (replace with your own)
+        if (email === 'user@example.com' && password === 'password123') {
+            signIn({ email });
+        } else {
+            setError('Invalid credentials');
+        }
+    };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
-      {error && <div className="error">{error}</div>}
-      <button type="submit">Sign In</button>
-    </form>
-  );
+    return (
+        <div>
+            <h2>Sign In</h2>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>Email:</label>
+                    <input 
+                        type="email" 
+                        value={email} 
+                        onChange={(e) => setEmail(e.target.value)} 
+                        required 
+                    />
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input 
+                        type="password" 
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)} 
+                        required 
+                    />
+                </div>
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+    );
 };
 
-export default SignInForm
+export default SignInForm;
