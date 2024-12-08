@@ -1,14 +1,14 @@
-import { createContext, useContext, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-
+import { AuthContext } from './AuthContext';
 
 // Create Context
-export const AuthContext = createContext();
+// export const AuthContext = createContext();
 
 // Create a custom hook to use AuthContext
-export const useAuth = () => {
-    return useContext(AuthContext);
-};
+// export const useAuth = () => {
+//     return useContext(AuthContext);
+// };
 
 // AuthProvider component to wrap around the app
 export const AuthProvider = ({ children }) => {
@@ -31,6 +31,8 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
         console.log('User signed out');
     };
+
+    console.log("AuthProvider Rendering, User State:", user);
 
     return (
         <AuthContext.Provider value={{ user, signIn, signUp, signOut }}>
