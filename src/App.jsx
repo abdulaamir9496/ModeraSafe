@@ -18,11 +18,16 @@ import NavbarTop from "./pages/HomePage/Header/NavbarTop";
 const App = () => {
     return (
         <>
+            {/* Navbar Sections */}
             <NavbarTop />
             <NavbarBottom />
+            
+            {/* Main Body */}
             <Section1 />
             <Section2 />
             <Section3 />
+            
+            {/* Footer */}
             <Footer />
         </>
         // <AuthProvider>
