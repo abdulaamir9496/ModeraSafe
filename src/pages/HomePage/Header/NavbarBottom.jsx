@@ -2,8 +2,8 @@
 const NavbarBottom = () => {
     return (
         <>
-            <nav style={{backgroundColor: "#2196F3", padding: "10px"}}>
-                <ul style={{display: "flex", listStyle: "none", justifyContent: "space-around"}}>
+            <nav className="p-2 bg-green-300 text-white">
+                <ul className="grid grid-cols-3 gap-4">
                     <li>Home</li>
                     <li>About</li>
                     <li>Contact</li>

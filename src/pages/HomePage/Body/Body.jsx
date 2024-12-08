@@ -5,11 +5,12 @@ import Section3 from "./Section3"
 const Body = () => {
     return (
         <>
-            <main style={{display: "flex", flexDirection: "column", height: 100vh}}>
+            <div className="flex flex-row h-full">
                 <Section1 />
                 <Section2 />
                 <Section3 />
-            </main>
+            </div>
+
         </>
     )
 }

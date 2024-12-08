@@ -6,10 +6,7 @@
 // import ModerationHub from './pages/ModerationHub';
 // import ErrorBoundary from './components/ErrorBoundary';  // Import ErrorBoundary
 
-import Section1 from "./pages/HomePage/Body/Section1";
-import Section2 from "./pages/HomePage/Body/Section2";
-import Section3 from "./pages/HomePage/Body/Section3";
-import Footer from "./pages/HomePage/Footer/Footer";
+import Body from "./pages/HomePage/Body/Body";
 import NavbarBottom from "./pages/HomePage/Header/NavbarBottom";
 import NavbarTop from "./pages/HomePage/Header/NavbarTop";
 
@@ -18,17 +15,14 @@ import NavbarTop from "./pages/HomePage/Header/NavbarTop";
 const App = () => {
     return (
         <>
-            {/* Navbar Sections */}
-            <NavbarTop />
-            <NavbarBottom />
-            
-            {/* Main Body */}
-            <Section1 />
-            <Section2 />
-            <Section3 />
-            
-            {/* Footer */}
-            <Footer />
+            <div className="flex flex-col h-screen">
+                {/* Navbar Sections */}
+                <NavbarTop />
+                <NavbarBottom />
+
+                {/* Main Body */}
+                <Body />
+            </div>
         </>
         // <AuthProvider>
         //     <Router>

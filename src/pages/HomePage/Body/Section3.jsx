@@ -1,10 +1,10 @@
 
 const Section3 = () => {
     return (
-        <div>
-            <h1>This is section 3 of the body</h1>
-        </div>
-    )
-}
+    <div className="flex-1 bg-green-200 flex items-center justify-center">
+        <h2>Section 3</h2>
+    </div>
+    );
+};
 
-export default Section3
+export default Section3;
