@@ -5,7 +5,7 @@ import Section3 from "./Section3"
 const Body = () => {
     return (
         <>
-            <div className="flex flex-row h-full">
+            <div className="flex flex-row h-screen">
                 <Section1 />
                 <Section2 />
                 <Section3 />
