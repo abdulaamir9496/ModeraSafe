@@ -1,8 +1,8 @@
 const Section1 = () => {
     return (
         <>
-            <div>
-                <div className="flex-1 bg-gray-200 p-4">
+            <div className="p-3 bg-gray-200">
+                <div className="flex-1 p-4">
                     <p className="text-lg font-bold">Product Preview</p>
                     <p className="text-sm text-gray-600">4229864103693989</p>
                     <p className="text-sm text-red-500">This is NOT a standard Commerce Product.</p>

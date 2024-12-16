@@ -1,17 +1,264 @@
+import { useState } from 'react';
+import SearchIcon from '@mui/icons-material/Search';
+import LinkIcon from '@mui/icons-material/Link';
+
+// Declare treeData at the top, before using it
+const treeData = {
+    "Suitable For All": [],
+    "Illegal Products or Services": ["Counterfeit Goods", "Unlicensed Products"],
+    "Potential Human Exploitation": ["Forced Labor", "Human Trafficking"],
+    "Recreational Drugs and Drugs Paraphernalia": ["Cannabis", "Drug Kits"],
+    "Documents, Currency and Financial Instruments": ["Counterfeit Currency"],
+    "Recalled Products (Appeals ONLY)": [],
+    "Stolen Goods": [],
+    "Weapons, ammunition or explosives": ["Guns", "Ammunition"],
+    "Hate Material": ["Propaganda"],
+    "Animal Sales": ["Endangered Animals"],
+    "Alcohol products and services": ["Alcoholic Beverages"],
+    "Discrimination": ["Racial Discrimination", "Gender Discrimination"],
+};
 
 const Section3 = () => {
+    const [query, setQuery] = useState('');
+  const [currentPath, setCurrentPath] = useState([]); // Tracks the breadcrumb path
+  const [currentTags, setCurrentTags] = useState(Object.keys(treeData)); // Initial tags to display
+    const [isFinalTag, setIsFinalTag] = useState(false);
+
+    const handleSearch = (e) => {
+    e.preventDefault();
+    alert(`Searching for: ${query}`);
+    };
+
+  // Handle tag click
+    const handleTagClick = (tag) => {
+    setCurrentPath((prev) => [...prev, tag]);
+    const childTags = treeData[tag];
+    if (childTags && childTags.length > 0) {
+        setCurrentTags(childTags);
+        setIsFinalTag(false);
+    } else {
+        setCurrentTags([]);
+        setIsFinalTag(true);
+    }
+    };
+
+  // Reset to the top-level tags
+    const handleBreadcrumbReset = () => {
+    setCurrentPath([]);
+    setCurrentTags(Object.keys(treeData));
+    setIsFinalTag(false);
+    };
+
+    const generateLink = (tag) =>
+    `https://example.com/policies/${tag.replace(/\s+/g, '-').toLowerCase()}`;
+
     return (
-        <>
-            <div className="flex-1 bg-slate-100 p-4">
-                <div>
-                    <p>Does this policy violate commerce policies? Choose the relevant policy</p>
-                </div>
+    <div className="p-6">
+      {/* Search Section */}
+        <h1 className="font-bold pt-4 pb-4">
+        Does this product violate commerce policies? Choose the relevant policy
+        </h1>
+        <form
+        onSubmit={handleSearch}
+        className="flex items-center border border-gray-300 rounded-lg w-10/12"
+        >
+        <input
+            type="text"
+            placeholder="Search..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="pl-4 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+        <button type="submit">
+            <SearchIcon />
+        </button>
+        </form>
+
+      {/* Breadcrumb */}
+        <div className="mt-4 mb-4">
+        {currentPath.length > 0 && (
+            <div className="flex items-center space-x-2">
+            <button
+                onClick={handleBreadcrumbReset}
+                className="text-blue-500 underline"
+            >
+                Reset
+            </button>
+            {currentPath.map((tag, idx) => (
+                <span key={idx} className="text-gray-500">
+                {tag} {idx < currentPath.length - 1 && '>'}
+                </span>
+            ))}
             </div>
-        </>
-    // <div className="flex-1 bg-green-200 flex items-center justify-center">
-    //     <h2>Section 3</h2>
-    // </div>
+        )}
+        </div>
+
+      {/* Tagging Tree */}
+        <div className="border border-gray-300 rounded-lg p-4 bg-gray-50">
+        <table className="table-auto w-full">
+            <thead>
+            <tr className="border-b">
+                <th className="text-left p-2">Violation Policy</th>
+                <th className="text-left p-2">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {currentTags.map((tag, idx) => (
+                <tr key={idx} className="border-t">
+                <td className="p-2 flex items-center">
+                    <div className="w-full border-r pr-2">{tag}</div>
+                    <button
+                    onClick={() => handleTagClick(tag)}
+                    className="text-blue-500 underline ml-2"
+                    >
+                    Open
+                    </button>
+                </td>
+                <td className="p-2">
+                    <a
+                    href={generateLink(tag)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >
+                    <LinkIcon className="text-blue-500 cursor-pointer" />
+                    </a>
+                </td>
+                </tr>
+            ))}
+            </tbody>
+        </table>
+
+        {/* Submit Button */}
+        <div className="mt-4 p-4 bg-gray-100 text-center">
+            <button
+            disabled={!isFinalTag}
+            className={`px-4 py-2 rounded-lg ${
+                isFinalTag ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-500'
+                }`}
+                    >
+                        Submit
+            </button>
+        </div>
+    </div>
+</div>
     );
 };
 
 export default Section3;
+
+
+//     const handleTagClick = (tag) => {
+//         setCurrentPath((prev) => [...prev, tag]);
+//         const childTags = treeData[tag];
+//         if (childTags && childTags.length > 0) {
+//         setCurrentTags(childTags);
+//         setIsFinalTag(false);
+//     } else {
+//         setCurrentTags([]);
+//         setIsFinalTag(true);
+//     }
+//     };
+
+//   // Reset to the top-level tags
+//     const handleBreadcrumbReset = () => {
+//         setCurrentPath([]);
+//         setCurrentTags(Object.keys(treeData));
+//         setIsFinalTag(false);
+//     };
+
+//     const generateLink = (tag) =>
+//     `https://example.com/policies/${tag.replace(/\s+/g, '-').toLowerCase()}`;
+
+//     return (
+//     <div className="p-6">
+//       {/* Search Section */}
+//         <h1 className="font-bold pt-4 pb-4">
+//         Does this product violate commerce policies? Choose the relevant policy
+//         </h1>
+//         <form
+//         onSubmit={handleSearch}
+//         className="flex items-center border border-gray-300 rounded-lg w-10/12"
+//         >
+//         <input
+//             type="text"
+//             placeholder="Search..."
+//             value={query}
+//             onChange={(e) => setQuery(e.target.value)}
+//             className="pl-4 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+//         />
+//         <button type="submit">
+//             <SearchIcon />
+//         </button>
+//         </form>
+
+//       {/* Breadcrumb */}
+//         <div className="mt-4 mb-4">
+//         {currentPath.length > 0 && (
+//             <div className="flex items-center space-x-2">
+//             <button
+//                 onClick={handleBreadcrumbReset}
+//                 className="text-blue-500 underline"
+//             >
+//                 Reset
+//             </button>
+//             {currentPath.map((tag, idx) => (
+//                 <span key={idx} className="text-gray-500">
+//                 {tag} {idx < currentPath.length - 1 && '>'}
+//                 </span>
+//             ))}
+//             </div>
+//         )}
+//         </div>
+
+//       {/* Tagging Tree */}
+//         <div className="border border-gray-300 rounded-lg p-4 bg-gray-50">
+//         <table className="table-auto w-full">
+//             <thead>
+//             <tr className="border-b">
+//                 <th className="text-left p-2">Violation Policy</th>
+//                 <th className="text-left p-2">Actions</th>
+//             </tr>
+//             </thead>
+//             <tbody>
+//             {currentTags.map((tag, idx) => (
+//                 <tr key={idx} className="border-t">
+//                 <td className="p-2 flex items-center">
+//                     <div className="w-full border-r pr-2">{tag}</div>
+//                     <button
+//                     onClick={() => handleTagClick(tag)}
+//                     className="text-blue-500 underline ml-2"
+//                     >
+//                     Open
+//                     </button>
+//                 </td>
+//                 <td className="p-2">
+//                     <a
+//                     href={generateLink(tag)}
+//                     target="_blank"
+//                     rel="noopener noreferrer"
+//                     >
+//                     <LinkIcon className="text-blue-500 cursor-pointer" />
+//                     </a>
+//                 </td>
+//                 </tr>
+//             ))}
+//             </tbody>
+//         </table>
+
+//         {/* Submit Button */}
+//         <div className="mt-4 p-4 bg-gray-100 text-center">
+//             <button
+//             disabled={!isFinalTag}
+//             className={`px-4 py-2 rounded-lg ${
+//                 isFinalTag ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-500'
+//             }`}
+//             >
+//             Submit
+//             </button>
+//         </div>
+//         </div>
+//     </div>
+//     );
+// };
+
+// export default Section3;
